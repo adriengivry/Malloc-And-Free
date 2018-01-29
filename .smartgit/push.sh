@@ -1,17 +1,17 @@
 #!/bin/bash
 
-if [ -z "$1" ]
+if [ -z "$1" || "$1" == "*" ]
     then
         MESSAGE="Oups, I forget to add a description to my commit"
     else
         MESSAGE=$1
-
 fi
 
 git add .
 git commit -m "$MESSAGE"
+echo "Commit done with message : $MESSAGE"
 
-if [ "$2" == "*" ]; 
+if [ "$2" == "*" || "$1" == "*" ]; 
     then
         echo "Okey, let's push on every remotes"
         while IFS='' read -r LINE || [[ -n "$LINE" ]]; 
