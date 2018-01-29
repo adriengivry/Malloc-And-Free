@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$1"]
+if [ -z "$1" ]
     then
         MESSAGE="Oups, I forget to add a description to my commit"
     else
