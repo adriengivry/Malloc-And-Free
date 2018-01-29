@@ -11,7 +11,7 @@ git add .
 git commit -m "$MESSAGE"
 echo "Commit done with message : $MESSAGE"
 
-if [ "$2" == "all"]; 
+if [ "$2" == "all" ]; 
     then
         echo "Okey, let's push on every remotes"
         while IFS='' read -r LINE || [[ -n "$LINE" ]]; 
