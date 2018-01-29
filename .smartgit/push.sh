@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$1" || "$1" == "all" ]
+if [ -z "$1"]
     then
         MESSAGE="Oups, I forget to add a description to my commit"
     else
@@ -11,7 +11,7 @@ git add .
 git commit -m "$MESSAGE"
 echo "Commit done with message : $MESSAGE"
 
-if [ "$2" == "all" || "$1" == "all" ]; 
+if [ "$2" == "all"]; 
     then
         echo "Okey, let's push on every remotes"
         while IFS='' read -r LINE || [[ -n "$LINE" ]]; 
