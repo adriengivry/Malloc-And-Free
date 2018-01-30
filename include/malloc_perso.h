@@ -2,6 +2,7 @@
 #define __MALLOC_PERSO__
 
 #include <stdio.h>
+#include <unistd.h>
 #include <stdbool.h>
 
 typedef struct s_block t_block;
