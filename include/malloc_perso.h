@@ -14,6 +14,7 @@ struct s_block
     bool to_free;
     t_block* next;
     t_block* previous;
+    void* data;
 };
 
 void initialize_block(t_block* block);
