@@ -1,7 +1,7 @@
 #ifndef __MALLOC_PERSO__
 #define __MALLOC_PERSO__
 
-#define ALIGN(size) 1
+#define ALIGN(size) ((size) + (sizeof(size_t)-1)) & ~(sizeof(size_t)-1)
 
 #include <stdio.h>
 #include <unistd.h>
