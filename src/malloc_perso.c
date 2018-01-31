@@ -46,7 +46,7 @@ t_block* extend_heap(size_t size)
 
 void* malloc_perso(size_t size)
 {
-    t_block* new_block = extend_heap(size);
+    t_block* new_block = extend_heap(ALIGN(size));
 
     if (!new_block)
         return NULL;

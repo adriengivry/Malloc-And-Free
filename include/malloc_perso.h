@@ -1,6 +1,8 @@
 #ifndef __MALLOC_PERSO__
 #define __MALLOC_PERSO__
 
+#define ALIGN(size) 1
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
