@@ -8,8 +8,11 @@ void free_perso(void* ptr)
 
     t_block* current = (t_block*)first_block;
 
-    while (current->next)
+    while (current)
     {
+        if (current->data == ptr)
+            current->to_free = true;
+            
         current = current->next;
     }
 }
