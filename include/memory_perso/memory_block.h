@@ -16,4 +16,6 @@ struct s_block
     t_block*    previous;  // 8 bytes
 };
 
+void iterate(t_block** block);
+
 #endif // __MEMORY_BLOCK__

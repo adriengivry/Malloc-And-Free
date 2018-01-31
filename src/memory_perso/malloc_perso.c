@@ -33,7 +33,7 @@ t_block* extend_heap(size_t size)
 
             while (current->next)
             {
-                current = current->next;
+                iterate(&current);
             }
 
             current->next = new_block;
@@ -49,10 +49,25 @@ void* malloc_perso(size_t size)
         return NULL;
 
     size_t aligned_size = ALIGN(size);
-    t_block* new_block = extend_heap(aligned_size);
-
+    t_block* new_block = find_block(aligned_size);
     if (!new_block)
-        return NULL;
-    
-    return new_block->data;
+    {
+        new_block = extend_heap(aligned_size);
+    }
+
+    return !new_block ? NULL : new_block->data;
+}
+
+t_block* find_block(size_t size)
+{
+    t_block* current = (t_block*)first_block;
+
+    while (current)
+    {
+        if (current->size >= size)
+            return current;
+        iterate(&current);
+    }
+
+    return NULL;
 }

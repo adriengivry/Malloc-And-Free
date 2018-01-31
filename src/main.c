@@ -11,15 +11,16 @@ int main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-    int* test;
-
-    test = (int*)malloc_perso(sizeof(int));
+    int* test = (int*)malloc_perso(sizeof(int));
     *test = 5;
 
     printf("Malloc perso result pointer : %p\n", test);
     printf("Malloc perso result value : %i\n", *test);
 
     free_perso(test);
+
+    int* test2 = (int*)malloc_perso(sizeof(int));
+    *test2 = 8;
     
     printf("Free perso result value : %i\n", *test);
 
