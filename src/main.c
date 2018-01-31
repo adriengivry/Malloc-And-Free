@@ -11,11 +11,7 @@ int main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-    void* brk_addr;
-    if (get_break_addr(&brk_addr))
-        printf("Current break adress : %p\n", brk_addr);
-    else
-        printf("Oups, sbrk failed\n");
+    printf("Extend heap result pointer : %p\n", extend_heap(5));
     
     return EXIT_SUCCESS;
 }

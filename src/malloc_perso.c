@@ -1,5 +1,7 @@
 #include "../include/malloc_perso.h"
 
+void* first_block = NULL;
+
 void initialize_block(t_block* block)
 {
     block->size = 0;
@@ -10,10 +12,33 @@ void initialize_block(t_block* block)
 
 t_block* extend_heap(size_t size)
 {
-    (void)size;
+    t_block* new_block = NULL;
 
-    t_block* new_block = (t_block*)sbrk(0);
-    
+        if (!get_break_addr((void**)&new_block))
+            return NULL;
+
+        sbrk(sizeof(t_block) + size);
+
+        initialize_block(new_block);
+        new_block->size = size;
+
+        if (!first_block)
+        {
+            first_block = (void*)new_block;
+        }
+        else
+        {
+            t_block* current = (t_block*)first_block;
+
+            while (current->next)
+            {
+                current = current->next;
+            }
+
+            current->next = new_block;
+            new_block->previous = current;
+        }
+
     return new_block;
 }
 
