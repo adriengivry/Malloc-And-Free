@@ -11,7 +11,11 @@ void free_perso(void* ptr)
     while (current)
     {
         if (current->data == ptr)
+        {
             current->to_free = true;
+            for(size_t i = 0; i < current->size; ++i)
+                ((char*)(current->data))[i] = 0;
+        }
             
         current = current->next;
     }
