@@ -1,11 +1,8 @@
-STEP 1:
-	Copy the .smartgit folder at the same level as the .git folder
+################ SMARTGIT : How to use it #######################
 
-STEP 2: 
-	Configure your remotes by modifying the remote.list
-
-STEP 3:
-	Use it by typing :
+--> Copy the .smartgit folder at the same level as the .git folder
+--> Configure your remotes by modifying the remote.list
+--> Use it by typing :
 		bash .smartgit/push.sh [MESSAGE_IN_DOUBLE_QUOTES] [REMOTE_NAME_OR_'all']
 		and
 		bash .smartgit/pull.sh [REMOTE_NAME]
