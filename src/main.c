@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <malloc.h>
 
 #include "../include/memory_perso/memory_perso.h"
 
@@ -11,18 +12,17 @@ int main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-    int* test = (int*)malloc_perso(sizeof(int));
-    *test = 5;
+    char* toto = (char*)malloc_perso(sizeof(char) * 5);
 
-    printf("Malloc perso result pointer : %p\n", test);
-    printf("Malloc perso result value : %i\n", *test);
+    *(toto + 0) = 'A';
+    *(toto + 1) = 'B';
+    *(toto + 2) = 'C';
+    *(toto + 3) = 'D';
+    *(toto + 4) = '\0';
 
-    free_perso(test);
+    printf("toto is a char* containing : %s\n", toto);
 
-    int* test2 = (int*)malloc_perso(sizeof(int));
-    *test2 = 8;
-    
-    printf("Free perso result value : %i\n", *test);
+    free_perso(toto);
 
     return EXIT_SUCCESS;
 }
