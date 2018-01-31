@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <stdbool.h>
 
+#include "util.h"
+
 typedef struct s_block t_block;
 struct s_block
 {

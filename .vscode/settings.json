@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "malloc_perso.h": "c",
+        "util.h": "c"
+    }
+}
