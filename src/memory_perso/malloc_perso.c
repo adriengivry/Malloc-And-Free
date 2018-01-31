@@ -1,6 +1,5 @@
-#include "../include/malloc_perso.h"
-
-void* first_block = NULL;
+#include "../../include/memory_perso/malloc_perso.h"
+#include "../../include/memory_perso/shared.h"
 
 void initialize_block(t_block* block)
 {
@@ -48,7 +47,7 @@ void* malloc_perso(size_t size)
 {
     if (size == 0)
         return NULL;
-        
+
     size_t aligned_size = ALIGN(size);
     t_block* new_block = extend_heap(aligned_size);
 

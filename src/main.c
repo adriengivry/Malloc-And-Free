@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "../include/malloc_perso.h"
+#include "../include/memory_perso/memory_perso.h"
 
 int main(int argc, char** argv)
 {
@@ -18,6 +18,10 @@ int main(int argc, char** argv)
 
     printf("Malloc perso result pointer : %p\n", test);
     printf("Malloc perso result value : %i\n", *test);
+
+    free_perso(test);
     
+    printf("Free perso result value : %i\n", *test);
+
     return EXIT_SUCCESS;
 }
