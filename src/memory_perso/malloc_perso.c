@@ -64,9 +64,10 @@ t_block* find_block(size_t size)
 
     while (current)
     {
-        if (current->size >= size)
-            return current;
-        iterate(&current);
+        if (current->size < size)
+            iterate(&current);
+        else 
+            return current->size > size ? split_block(current, size) : current;
     }
 
     return NULL;
