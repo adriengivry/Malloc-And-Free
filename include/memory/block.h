@@ -19,6 +19,8 @@ struct s_block
 
 void        init_block(t_block* block);
 void        iterate_block(t_block** block);
+void        try_to_fuse(t_block* block);
+void        try_to_fuse_with(t_block* block, t_block* other_block);
 void*       reset_block(void* data, int value, size_t size);
 void*       get_data(t_block* block);
 t_block*    get_block(void* data);

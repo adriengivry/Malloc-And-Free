@@ -14,10 +14,11 @@ void free_perso(void* ptr)
         return;
     }
 
-    // If previous or next block is free --> fuse
+    t_block* block = get_block(ptr);
 
-    reset_block(ptr, 0, get_block(ptr)->size);
-    get_block(ptr)->free = true;
+    try_to_fuse(block);
+    reset_block(ptr, 0, block->size);
+    block->free = true;
 
     DEBUG_SUCCESS("Free : Success");
 }

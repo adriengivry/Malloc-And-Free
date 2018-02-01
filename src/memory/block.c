@@ -113,6 +113,21 @@ t_block* split_block(t_block* block, size_t size)
     return block;
 }
 
+void try_to_fuse(t_block* block)
+{
+    if (block->previous->free || block->next->free)
+        return;
+    
+    try_to_fuse_with(block, block->previous);
+    try_to_fuse_with(block, block->next);
+}
+
+void try_to_fuse_with(t_block* block, t_block* other_block)
+{
+    (void)block;
+    (void)other_block;
+}
+
 size_t count_allocated_blocks()
 {
     size_t counter = 0;
