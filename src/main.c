@@ -10,21 +10,13 @@ int main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-    char* toto = (char*)malloc_perso(sizeof(char) * 20);
-    free_perso(toto);
+    ALLOC_TEST(int,             toto1, 1);
+    ALLOC_TEST(char,            toto2, 5);
+    ALLOC_TEST(unsigned int,    toto3, 1);
+    ALLOC_TEST(float,           toto4, 1);
+    ALLOC_TEST(double,          toto5, 3);
 
-    printf("\n");
-
-    char* toto2 = (char*)malloc_perso(sizeof(char) * 20);
-    free_perso(toto2);
-
-    printf("\n");
-
-    char* toto3 = (char*)malloc_perso(sizeof(char) * 5);
-    free_perso(toto3);
-
-    printf("\e[0;36m[SUMMARY] Blocks : %lu\e[0m\n", count_allocated_blocks());
-    printf("\e[0;36m[SUMMARY] Blocks free : %lu\e[0m\n", count_free_blocks());
+    DEBUG_SUMMARY();
 
     return EXIT_SUCCESS;
 }
