@@ -87,8 +87,7 @@ t_block* find_block(size_t size)
             return current->size > size ? split_block(current, size) : current;
         }
     }
-
-    DEBUG_INFO("Find block : No block found");
+    
     return NULL;
 }
 
@@ -115,14 +114,31 @@ t_block* split_block(t_block* block, size_t size)
 
 void try_to_fuse(t_block* block)
 {
-    try_to_fuse_with(block, block->previous);
-    try_to_fuse_with(block, block->next);
-}
+    if(block->previous && block->free && block->previous->free)
+    {
+        block->previous->size += sizeof(t_block) + block->size;
 
-void try_to_fuse_with(t_block* block, t_block* other_block)
-{
-    (void)block;
-    (void)other_block;
+        if(block->next != NULL)
+            block->next->previous = block->previous;
+
+        block->previous->next = block->next;
+
+        reset_block(block, 0, sizeof(t_block));
+        DEBUG_INFO("Previous fuse : Done");
+    }
+
+    if(block->next && block->free && block->next->free)
+    {
+        block->size += sizeof(t_block) + block->next->size;
+
+        if(block->next->next != NULL)
+            block->next = block->next->next;
+
+        block->previous->next = block->next;
+
+        reset_block(block->next, 0, sizeof(t_block));
+        DEBUG_INFO("Next fuse : Done");
+    }
 }
 
 size_t count_allocated_blocks()

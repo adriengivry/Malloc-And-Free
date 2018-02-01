@@ -10,11 +10,15 @@ int main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-    ALLOC_TEST(int,             toto1, 1);
-    ALLOC_TEST(char,            toto2, 5);
-    ALLOC_TEST(unsigned int,    toto3, 1);
-    ALLOC_TEST(float,           toto4, 1);
-    ALLOC_TEST(double,          toto5, 3);
+    int* test1 = (int*)malloc_perso(sizeof(int));
+    int* test2 = (int*)malloc_perso(sizeof(int));
+    int* test3 = (int*)malloc_perso(sizeof(int));
+    int* test4 = (int*)malloc_perso(sizeof(int));
+
+    free_perso(test1);
+    free_perso(test3);
+    free_perso(test2);
+    free_perso(test4);
 
     DEBUG_SUMMARY();
 

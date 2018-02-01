@@ -2,9 +2,12 @@
 
 void* malloc_perso(size_t size)
 {
+    DEBUG_START("Malloc");
+
     if (size == 0)
     {
         DEBUG_ERROR("Malloc : Size given is 0");
+        DEBUG_END("Malloc");
         return NULL;
     }
 
@@ -24,6 +27,8 @@ void* malloc_perso(size_t size)
     {
         DEBUG_SUCCESS("Malloc : Success");
     }
+
+    DEBUG_END("Malloc");
 
     return !new_block ? NULL : get_data(new_block);
 }
