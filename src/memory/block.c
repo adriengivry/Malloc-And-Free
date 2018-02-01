@@ -7,7 +7,8 @@ void init_block(t_block* block)
     block->next = NULL;
     block->previous = NULL;
     block->free = false;
-    block->data = NULL;
+
+    DEBUG_INFO("Init block : Done");
 }
 
 void iterate_block(t_block** block)
@@ -21,8 +22,20 @@ void* reset_block(void* data, int value, size_t size)
 
     while(size--)
         *(tempData++) = (unsigned char)value;
+
+    DEBUG_INFO("Reset Block : Done");
     
     return data;
+}
+
+void* get_data(t_block* block)
+{
+    return (void*)(block + 1);
+}
+
+t_block* get_block(void* data)
+{
+    return ((t_block*)data) - 1;
 }
 
 t_block* extend_heap(size_t size)
@@ -30,46 +43,52 @@ t_block* extend_heap(size_t size)
     t_block* new_block = NULL;
 
         if (!get_break_addr((void**)&new_block))
+        {
+            DEBUG_ERROR("Extend heap : Unable to get break addr");
             return NULL;
+        }
 
         sbrk(sizeof(t_block) + size);
 
         init_block(new_block);
         new_block->size = size;
-        new_block->data = new_block + 1;
 
-        if (!first_block)
+        if (!head)
         {
-            first_block = (void*)new_block;
+            head = (void*)new_block;
         }
         else
         {
-            t_block* current = (t_block*)first_block;
+            t_block* current = (t_block*)head;
 
             while (current->next)
-            {
                 iterate_block(&current);
-            }
 
             current->next = new_block;
             new_block->previous = current;
         }
+
+    DEBUG_INFO("Extend heap : Done");
 
     return new_block;
 }
 
 t_block* find_block(size_t size)
 {
-    t_block* current = (t_block*)first_block;
+    t_block* current = (t_block*)head;
 
     while (current)
     {
-        if (current->size < size)
+        if (current->size < size || !current->free)
             iterate_block(&current);
-        else 
+        else
+        {
+            DEBUG_INFO("Find block : Block found");
             return current->size > size ? split_block(current, size) : current;
+        }
     }
 
+    DEBUG_INFO("Find block : No block found");
     return NULL;
 }
 
@@ -82,5 +101,45 @@ t_block* split_block(t_block* block, size_t size)
     if (!splitted_block)
         splitted_block = extend_heap(remaining_size);
 
+    splitted_block->free = true;
+    splitted_block->previous->next = NULL;
+    splitted_block->previous = block;
+    splitted_block->next = block->next;
+    block->next = splitted_block;
+
+
+    DEBUG_INFO("Split block : Done");
+
     return block;
+}
+
+size_t count_allocated_blocks()
+{
+    size_t counter = 0;
+
+    t_block* current = (t_block*)head;
+
+    while (current)
+    {
+        ++counter;
+        iterate_block(&current);
+    }
+
+    return counter;
+}
+
+size_t count_free_blocks()
+{
+    size_t counter = 0;
+
+    t_block* current = (t_block*)head;
+
+    while (current)
+    {
+        if (current->free)
+            ++counter;
+        iterate_block(&current);
+    }
+
+    return counter;
 }

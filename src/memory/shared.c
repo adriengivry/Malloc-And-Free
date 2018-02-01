@@ -2,4 +2,4 @@
 
 #include <stddef.h>
 
-void* first_block = NULL;
+void* head = NULL;

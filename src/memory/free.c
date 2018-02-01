@@ -1,21 +1,24 @@
 #include "../../include/memory/free.h"
-#include "../../include/memory/shared.h"
 
 void free_perso(void* ptr)
 {
     if (!ptr)
-        return;
-
-    t_block* current = (t_block*)first_block;
-
-    while (current)
     {
-        if (current->data == ptr)
-        {
-            current->free = true;
-            reset_block(current->data, 0, current->size);
-        }
-            
-        current = current->next;
+        DEBUG_ERROR("Free : Ptr is NULL");
+        return;
     }
+
+    if (!get_block(ptr))
+    {
+        DEBUG_ERROR("Free : Block not found");
+        return;
+    }
+
+    // If previous or next block is free --> fuse
+
+    reset_block(ptr, 0, get_block(ptr)->size);
+
+    get_block(ptr)->free = true;
+
+    DEBUG_SUCCESS("Free : Success");
 }

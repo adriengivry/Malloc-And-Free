@@ -10,19 +10,21 @@ int main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-    char* toto = (char*)malloc_perso(sizeof(char) * 5);
-
-    *(toto + 0) = 'A';
-    *(toto + 1) = 'B';
-    *(toto + 2) = 'C';
-    *(toto + 3) = 'D';
-    *(toto + 4) = '\0';
-
-    printf("toto is a char* containing : %s\n", toto);
-
+    char* toto = (char*)malloc_perso(sizeof(char) * 20);
     free_perso(toto);
 
-    printf("toto is a char* containing : %s\n", toto);
+    printf("\n");
+
+    char* toto2 = (char*)malloc_perso(sizeof(char) * 20);
+    free_perso(toto2);
+
+    printf("\n");
+
+    char* toto3 = (char*)malloc_perso(sizeof(char) * 5);
+    free_perso(toto3);
+
+    printf("\e[0;36m[SUMMARY] Blocks : %lu\e[0m\n", count_allocated_blocks());
+    printf("\e[0;36m[SUMMARY] Blocks free : %lu\e[0m\n", count_free_blocks());
 
     return EXIT_SUCCESS;
 }

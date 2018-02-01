@@ -1,7 +1,7 @@
-#ifndef __MEMORY_PERSO__
-#define __MEMORY_PERSO__
+#ifndef __MEMORY__
+#define __MEMORY__
 
 #include "memory/malloc.h"
 #include "memory/free.h"
 
-#endif // __MEMORY_PERSO__
+#endif // __MEMORY__
