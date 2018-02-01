@@ -115,9 +115,6 @@ t_block* split_block(t_block* block, size_t size)
 
 void try_to_fuse(t_block* block)
 {
-    if (block->previous->free || block->next->free)
-        return;
-    
     try_to_fuse_with(block, block->previous);
     try_to_fuse_with(block, block->next);
 }
