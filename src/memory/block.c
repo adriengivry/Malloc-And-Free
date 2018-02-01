@@ -1,13 +1,28 @@
-#include "../../include/memory_perso/malloc_perso.h"
-#include "../../include/memory_perso/shared.h"
+#include "../../include/memory/block.h"
+#include "../../include/memory/shared.h"
 
-void initialize_block(t_block* block)
+void init_block(t_block* block)
 {
     block->size = 0;
     block->next = NULL;
     block->previous = NULL;
-    block->to_free = false;
+    block->free = false;
     block->data = NULL;
+}
+
+void iterate_block(t_block** block)
+{
+    *block = (*block)->next;
+}
+
+void* reset_block(void* data, int value, size_t size)
+{
+    unsigned char* tempData = (unsigned char*)data;
+
+    while(size--)
+        *(tempData++) = (unsigned char)value;
+    
+    return data;
 }
 
 t_block* extend_heap(size_t size)
@@ -19,7 +34,7 @@ t_block* extend_heap(size_t size)
 
         sbrk(sizeof(t_block) + size);
 
-        initialize_block(new_block);
+        init_block(new_block);
         new_block->size = size;
         new_block->data = new_block + 1;
 
@@ -33,7 +48,7 @@ t_block* extend_heap(size_t size)
 
             while (current->next)
             {
-                iterate(&current);
+                iterate_block(&current);
             }
 
             current->next = new_block;
@@ -43,21 +58,6 @@ t_block* extend_heap(size_t size)
     return new_block;
 }
 
-void* malloc_perso(size_t size)
-{
-    if (size == 0)
-        return NULL;
-
-    size_t aligned_size = ALIGN(size);
-    t_block* new_block = find_block(aligned_size);
-    if (!new_block)
-    {
-        new_block = extend_heap(aligned_size);
-    }
-
-    return !new_block ? NULL : new_block->data;
-}
-
 t_block* find_block(size_t size)
 {
     t_block* current = (t_block*)first_block;
@@ -65,10 +65,22 @@ t_block* find_block(size_t size)
     while (current)
     {
         if (current->size < size)
-            iterate(&current);
+            iterate_block(&current);
         else 
             return current->size > size ? split_block(current, size) : current;
     }
 
     return NULL;
+}
+
+t_block* split_block(t_block* block, size_t size)
+{
+    size_t remaining_size = block->size - size;
+    block->size = size;
+
+    t_block* splitted_block = find_block(remaining_size);
+    if (!splitted_block)
+        splitted_block = extend_heap(remaining_size);
+
+    return block;
 }

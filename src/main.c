@@ -2,10 +2,8 @@
 #define EXIT_FAILURE 1
 
 #include <stdio.h>
-#include <unistd.h>
-#include <malloc.h>
 
-#include "../include/memory_perso/memory_perso.h"
+#include "../include/memory.h"
 
 int main(int argc, char** argv)
 {

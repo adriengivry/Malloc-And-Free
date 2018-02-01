@@ -1,5 +1,5 @@
-#include "../../include/memory_perso/free_perso.h"
-#include "../../include/memory_perso/shared.h"
+#include "../../include/memory/free.h"
+#include "../../include/memory/shared.h"
 
 void free_perso(void* ptr)
 {
@@ -12,8 +12,8 @@ void free_perso(void* ptr)
     {
         if (current->data == ptr)
         {
-            current->to_free = true;
-            my_memset(current->data, 0, current->size);
+            current->free = true;
+            reset_block(current->data, 0, current->size);
         }
             
         current = current->next;
