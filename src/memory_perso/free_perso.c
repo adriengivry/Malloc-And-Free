@@ -13,8 +13,7 @@ void free_perso(void* ptr)
         if (current->data == ptr)
         {
             current->to_free = true;
-            for(size_t i = 0; i < current->size; ++i)
-                ((char*)(current->data))[i] = 0;
+            my_memset(current->data, 0, current->size);
         }
             
         current = current->next;
