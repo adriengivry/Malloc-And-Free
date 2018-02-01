@@ -7,8 +7,10 @@ void iterate(t_block** block)
 
 void* my_memset(void* data, int value, size_t size)
 {
-    for(size_t i = 0; i < size; ++i)
-        ((unsigned char*)(data))[i] = (unsigned char)value;
+    unsigned char* tempData = (unsigned char*)data;
+
+    while(size--)
+        *(tempData++) = (unsigned char)value;
     
     return data;
 }

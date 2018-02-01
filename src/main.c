@@ -24,5 +24,7 @@ int main(int argc, char** argv)
 
     free_perso(toto);
 
+    printf("toto is a char* containing : %s\n", toto);
+
     return EXIT_SUCCESS;
 }
